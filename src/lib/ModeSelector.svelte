@@ -8,6 +8,9 @@
     { text: 'Medium', mode: 'medium' },
     { text: 'Hard', mode: 'hard' },
     { text: 'Very Hard', mode: 'very_hard' },
+    { text: 'Special: Dark Symbol', mode: 'dark_symbol' },
+    { text: 'Special: Light Symbol', mode: 'light_symbol' },
+    { text: 'Special: Four Hexagons', mode: 'four_hexagons' },
     { text: 'Special: Flower', mode: 'flower' },
   ];
 
