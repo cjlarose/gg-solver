@@ -1,9 +1,6 @@
 import { writable } from 'svelte/store';
-
-interface Coord {
-  i: number,
-  j: number,
-};
+import Coord from '$lib/coord';
+import { Mode } from '$lib/mode';
 
 interface Game {
   m: number,
@@ -44,18 +41,7 @@ export function light(game: Game, coord: Coord) {
   return game.tiles.get(`${coord.i}_${coord.j}`) === true;
 }
 
-export function createEasyGame() {
-  const tiles: Array<Coord> = [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 0, j: 3 },
-    { i: 1, j: 0 },
-    { i: 1, j: 1 },
-    { i: 1, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 1 },
-    { i: 2, j: 2 },
-    { i: 2, j: 3 },
-  ];
-  return createGame(3, 5, tiles);
+export function createGameFromMode(mode: Mode) {
+  const { m, n, tiles } = mode;
+  return createGame(m, n, tiles);
 }

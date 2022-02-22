@@ -3,16 +3,22 @@
 </script>
 
 <script lang="ts">
-  import { createEasyGame } from '$lib/game_state';
-	import PuzzleInput from '$lib/PuzzleInput.svelte';
+  import { createGameFromMode } from '$lib/game_state';
+  import { ModeName, tilesForMode } from '$lib/mode';
+  import PuzzleInput from '$lib/PuzzleInput.svelte';
+  import ModeSelector from '$lib/ModeSelector.svelte';
 
-  let game = createEasyGame();
+  let modeName: ModeName = 'easy'
+  $: mode = tilesForMode(modeName);
+  $: game = createGameFromMode(mode);
+
+  function handleModeSelection(e) {
+    modeName = e.detail;
+  }
 
   function handleToggle(e) {
     game.toggle(e.detail);
   }
-
-  $: console.log(game.coords);
 </script>
 
 <svelte:head>
@@ -22,6 +28,7 @@
 <section>
 	<h1>Calculator</h1>
 
+  <ModeSelector {modeName} on:select={handleModeSelection} />
   <PuzzleInput game={$game} on:toggle={handleToggle} />
 </section>
 
