@@ -6,22 +6,26 @@
 
   $: rows = [...Array(game.m).keys()];
   $: cols = [...Array(game.n).keys()];
+  $: width = 1 / game.n;
+  $: height = width * 100 / Math.sin(Math.PI / 3);
 
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="puzzle-input">
+<div class="puzzle-input" style="--hex-width: { width * 100 }%; --hex-height: { height * 100 }%">
   {#each rows as i }
     <div class="hex-row">
       {#each cols as j }
         {#if member(game, { i, j }) }
-          {#if light(game, { i, j }) }
-            <button class="hex hex-light" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></button>
-          {:else}
-            <button class="hex hex-dark" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></button>
-          {/if}
+          <div class="hex {light(game, { i, j }) ? "hex-light" : "hex-dark"}">
+            <div class="hex-inner">
+              <button class="hex-button" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></button>
+            </div>
+          </div>
         {:else}
-          <button class="hex hex-spacer"></button>
+          <div class="hex hex-spacer">
+            <div class="hex-inner"></div>
+          </div>
         {/if}
       {/each}
     </div>
@@ -30,78 +34,62 @@
 
 <style>
   .puzzle-input {
+    width: 100%;
     --dark-color: #333;
     --light-color: #cc3;
   }
 
   .hex-row {
-    clear: left;
+    display: flex;
   }
 
   .hex-row:nth-child(even) {
-    margin-left: 53px;
-    margin-right: -53px;
-  }
-
-  .hex:before {
-    content: " ";
-    width: 0;
-    height: 0;
-    border-bottom: 30px solid #6C6;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
-    position: absolute;
-    top: -30px;
-    left: 0;
+    margin-left: calc(var(--hex-width) / 2);
+    margin-right: calc(var(--hex-width) / -2);
   }
 
   .hex {
-    margin-top: 33px;
-    margin-left: 3px;
-    width: 104px;
-    height: 60px;
-    background-color: #6C6;
+    width: var(--hex-width);
     position: relative;
-    border: 0;
-    padding: 0;
+    visibility: hidden;
   }
 
-  .hex:after {
-    content: "";
-    width: 0;
-    position: absolute;
-    bottom: -30px;
-    left: 0;
-    border-top: 30px solid #6C6;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
+  .hex::after{
+    content: '';
+    display: block;
+    padding-bottom: 86.602%;
   }
 
   .hex-spacer {
     visibility: hidden;
   }
 
-  .hex-dark {
+  .hex-inner {
+    position: absolute;
+    width: 96%;
+    padding-bottom: 110.851%;
+    margin: 2%;
+    transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+    visibility: hidden;
+    overflow: hidden;
+  }
+
+  .hex-button {
+    display: block;
+    position: absolute;
+    border: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+    visibility: visible;
+  }
+
+  .hex-dark .hex-button {
     background-color: var(--dark-color);
   }
 
-  .hex-dark:before {
-    border-bottom-color: var(--dark-color);
-  }
-
-  .hex-dark:after {
-    border-top-color: var(--dark-color);
-  }
-
-  .hex-light {
+  .hex-light .hex-button {
     background-color: var(--light-color);
-  }
-
-  .hex-light:before {
-    border-bottom-color: var(--light-color);
-  }
-
-  .hex-light:after {
-    border-top-color: var(--light-color);
   }
 </style>
