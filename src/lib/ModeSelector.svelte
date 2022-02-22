@@ -7,6 +7,7 @@
     { text: 'Easy', mode: 'easy' },
     { text: 'Medium', mode: 'medium' },
     { text: 'Hard', mode: 'hard' },
+    { text: 'Very Hard', mode: 'very_hard' },
   ];
 
   function handleChange(e) {
