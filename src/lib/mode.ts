@@ -1,6 +1,6 @@
 import Coord from '$lib/coord';
 
-export type ModeName = 'easy' | 'medium' | 'hard' | 'very_hard';
+export type ModeName = 'easy' | 'medium' | 'hard' | 'very_hard' | 'flower';
 export interface Mode {
   m: number,
   n: number,
@@ -162,6 +162,92 @@ const VERY_HARD_MODE: Mode = {
   ]
 }
 
+const FLOWER: Mode = {
+  m: 13,
+  n: 13,
+  tiles: [
+    { i: 0, j: 4 },
+    { i: 0, j: 5 },
+    { i: 0, j: 6 },
+    { i: 0, j: 7 },
+    { i: 0, j: 8 },
+    { i: 1, j: 2 },
+    { i: 1, j: 4 },
+    { i: 1, j: 5 },
+    { i: 1, j: 6 },
+    { i: 1, j: 7 },
+    { i: 1, j: 9 },
+    { i: 2, j: 2 },
+    { i: 2, j: 3 },
+    { i: 2, j: 5 },
+    { i: 2, j: 6 },
+    { i: 2, j: 7 },
+    { i: 2, j: 9 },
+    { i: 2, j: 10 },
+    { i: 3, j: 1 },
+    { i: 3, j: 2 },
+    { i: 3, j: 3 },
+    { i: 3, j: 8 },
+    { i: 3, j: 9 },
+    { i: 3, j: 10 },
+    { i: 4, j: 1 },
+    { i: 4, j: 2 },
+    { i: 4, j: 3 },
+    { i: 4, j: 9 },
+    { i: 4, j: 10 },
+    { i: 4, j: 11 },
+    { i: 5, j: 0 },
+    { i: 5, j: 1 },
+    { i: 5, j: 2 },
+    { i: 5, j: 5 },
+    { i: 5, j: 6 },
+    { i: 5, j: 9 },
+    { i: 5, j: 10 },
+    { i: 5, j: 11 },
+    { i: 6, j: 5 },
+    { i: 6, j: 6 },
+    { i: 6, j: 7 },
+    { i: 7, j: 0 },
+    { i: 7, j: 1 },
+    { i: 7, j: 2 },
+    { i: 7, j: 5 },
+    { i: 7, j: 6 },
+    { i: 7, j: 9 },
+    { i: 7, j: 10 },
+    { i: 7, j: 11 },
+    { i: 8, j: 1 },
+    { i: 8, j: 2 },
+    { i: 8, j: 3 },
+    { i: 8, j: 9 },
+    { i: 8, j: 10 },
+    { i: 8, j: 11 },
+    { i: 9, j: 1 },
+    { i: 9, j: 2 },
+    { i: 9, j: 3 },
+    { i: 9, j: 8 },
+    { i: 9, j: 9 },
+    { i: 9, j: 10 },
+    { i: 10, j: 2 },
+    { i: 10, j: 3 },
+    { i: 10, j: 5 },
+    { i: 10, j: 6 },
+    { i: 10, j: 7 },
+    { i: 10, j: 9 },
+    { i: 10, j: 10 },
+    { i: 11, j: 2 },
+    { i: 11, j: 4 },
+    { i: 11, j: 5 },
+    { i: 11, j: 6 },
+    { i: 11, j: 7 },
+    { i: 11, j: 9 },
+    { i: 12, j: 4 },
+    { i: 12, j: 5 },
+    { i: 12, j: 6 },
+    { i: 12, j: 7 },
+    { i: 12, j: 8 },
+  ]
+}
+
 export function tilesForMode(mode: ModeName): Mode {
   switch (mode) {
     case 'easy':
@@ -172,5 +258,7 @@ export function tilesForMode(mode: ModeName): Mode {
       return HARD_MODE;
     case 'very_hard':
       return VERY_HARD_MODE;
+    case 'flower':
+      return FLOWER;
   }
 }

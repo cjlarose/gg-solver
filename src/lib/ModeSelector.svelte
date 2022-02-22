@@ -8,6 +8,7 @@
     { text: 'Medium', mode: 'medium' },
     { text: 'Hard', mode: 'hard' },
     { text: 'Very Hard', mode: 'very_hard' },
+    { text: 'Special: Flower', mode: 'flower' },
   ];
 
   function handleChange(e) {
