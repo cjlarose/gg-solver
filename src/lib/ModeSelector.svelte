@@ -6,6 +6,7 @@
   const options: Array<[String, ModeName]> = [
     { text: 'Easy', mode: 'easy' },
     { text: 'Medium', mode: 'medium' },
+    { text: 'Hard', mode: 'hard' },
   ];
 
   function handleChange(e) {
