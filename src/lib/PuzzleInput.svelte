@@ -6,22 +6,24 @@
 
   $: rows = [...Array(game.m).keys()];
   $: cols = [...Array(game.n).keys()];
+  $: width = 550 * (1 / game.n);
+  $: height = 1 / Math.sqrt(3) * width;
 
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="puzzle-input">
+<div class="puzzle-input" style="--hex-width: { Math.floor(width) }px; --hex-height: { Math.floor(height) }px">
   {#each rows as i }
     <div class="hex-row">
       {#each cols as j }
         {#if member(game, { i, j }) }
           {#if light(game, { i, j }) }
-            <button class="hex hex-light" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></button>
+            <div class="hex hex-light" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></div>
           {:else}
-            <button class="hex hex-dark" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></button>
+            <div class="hex hex-dark" on:click={(e) => { e.preventDefault(); dispatch('toggle', { i, j }) }}></div>
           {/if}
         {:else}
-          <button class="hex hex-spacer"></button>
+          <div class="hex hex-spacer"></div>
         {/if}
       {/each}
     </div>
@@ -35,31 +37,31 @@
   }
 
   .hex-row {
-    clear: left;
+    display: flex;
   }
 
   .hex-row:nth-child(even) {
-    margin-left: 53px;
-    margin-right: -53px;
+    margin-left: calc(var(--hex-width) / 2);
+    margin-right: calc(var(--hex-width) / -2);
   }
 
   .hex:before {
     content: " ";
     width: 0;
     height: 0;
-    border-bottom: 30px solid #6C6;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
+    border-bottom: calc(var(--hex-height) / 2) solid #6C6;
+    border-left: calc(var(--hex-width) / 2) solid transparent;
+    border-right: calc(var(--hex-width) / 2) solid transparent;
     position: absolute;
-    top: -30px;
+    top: calc(var(--hex-height) / -2);
     left: 0;
   }
 
   .hex {
-    margin-top: 33px;
+    margin-top: calc((var(--hex-height) / 2) + 3px);
     margin-left: 3px;
-    width: 104px;
-    height: 60px;
+    width: var(--hex-width);
+    height: var(--hex-height);
     background-color: #6C6;
     position: relative;
     border: 0;
@@ -70,11 +72,11 @@
     content: "";
     width: 0;
     position: absolute;
-    bottom: -30px;
+    bottom: calc(var(--hex-height) / -2);
     left: 0;
-    border-top: 30px solid #6C6;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
+    border-top: calc(var(--hex-height) / 2) solid #6C6;
+    border-left: calc(var(--hex-width) / 2) solid transparent;
+    border-right: calc(var(--hex-width) / 2) solid transparent;
   }
 
   .hex-spacer {
