@@ -36,7 +36,7 @@
   .puzzle-input {
     width: 100%;
     max-width: 600px;
-    margin: 3em 0;
+    margin: 1em 0 3em;
     --dark-color: #333;
     --light-color: #d5b610;
   }
