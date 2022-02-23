@@ -46,7 +46,19 @@ export function createGameFromMode(mode: Mode) {
   return createGame(m, n, tiles);
 }
 
-export function solved(game: Game): boolean {
-  const values: Array<boolean> = [...game.tiles.values()];
-  return values.every(val => val === false) || values.every(val => val === true);
+function allTilesInState(game: Game, state: boolean) {
+  for (const val of game.tiles.values()) {
+    if (val !== state) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export function solvedForDarkness(game: Game): boolean {
+  return allTilesInState(game, false);
+}
+
+export function solvedForLight(game: Game): boolean {
+  return allTilesInState(game, true);
 }

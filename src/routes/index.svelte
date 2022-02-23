@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { createGameFromMode, solved } from '$lib/game_state';
+  import { createGameFromMode, solvedForDarkness, solvedForLight } from '$lib/game_state';
   import { ModeName, tilesForMode } from '$lib/mode';
   import PuzzleInput from '$lib/PuzzleInput.svelte';
   import ModeSelector from '$lib/ModeSelector.svelte';
@@ -21,8 +21,10 @@
     game.toggle(e.detail);
   }
 
-  let solveButtonsEnabled = false;
-  $: solveButtonsEnabled = !solved($game);
+  let solvedForDarknessEnabled = false;
+  let solvedForLightEnabled = false;
+  $: solveForDarknessEnabled = !solvedForDarkness($game);
+  $: solveForLightEnabled = !solvedForLight($game);
 
   function handleSolveRequest(e) {
     console.log('handleSolveRequest');
@@ -39,7 +41,10 @@
 
   <ModeSelector {modeName} on:select={handleModeSelection} />
   <PuzzleInput game={$game} on:toggle={handleToggle} />
-  <SolveButtons enabled={solveButtonsEnabled} on:solveRequest={handleSolveRequest} />
+  <SolveButtons darknessEnabled={solveForDarknessEnabled}
+                lightEnabled={solveForLightEnabled}
+                on:solveRequest={handleSolveRequest}
+                />
 </section>
 
 <style>
