@@ -45,3 +45,8 @@ export function createGameFromMode(mode: Mode) {
   const { m, n, tiles } = mode;
   return createGame(m, n, tiles);
 }
+
+export function solved(game: Game): boolean {
+  const values: Array<boolean> = [...game.tiles.values()];
+  return values.every(val => val === false) || values.every(val => val === true);
+}

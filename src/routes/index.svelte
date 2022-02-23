@@ -3,10 +3,11 @@
 </script>
 
 <script lang="ts">
-  import { createGameFromMode } from '$lib/game_state';
+  import { createGameFromMode, solved } from '$lib/game_state';
   import { ModeName, tilesForMode } from '$lib/mode';
   import PuzzleInput from '$lib/PuzzleInput.svelte';
   import ModeSelector from '$lib/ModeSelector.svelte';
+  import SolveButtons from '$lib/SolveButtons.svelte';
 
   let modeName: ModeName = 'easy'
   $: mode = tilesForMode(modeName);
@@ -19,6 +20,14 @@
   function handleToggle(e) {
     game.toggle(e.detail);
   }
+
+  let solveButtonsEnabled = false;
+  $: solveButtonsEnabled = !solved($game);
+
+  function handleSolveRequest(e) {
+    console.log('handleSolveRequest');
+    console.log(e.detail)
+  }
 </script>
 
 <svelte:head>
@@ -30,6 +39,7 @@
 
   <ModeSelector {modeName} on:select={handleModeSelection} />
   <PuzzleInput game={$game} on:toggle={handleToggle} />
+  <SolveButtons enabled={solveButtonsEnabled} on:solveRequest={handleSolveRequest} />
 </section>
 
 <style>
