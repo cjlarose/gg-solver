@@ -5,6 +5,7 @@
 <script lang="ts">
   import { createGameFromMode, solvedForDarkness, solvedForLight } from '$lib/game_state';
   import { ModeName, tilesForMode } from '$lib/mode';
+  import SolutionManager from '$lib/solution_manager'
   import PuzzleInput from '$lib/PuzzleInput.svelte';
   import ModeSelector from '$lib/ModeSelector.svelte';
   import SolveButtons from '$lib/SolveButtons.svelte';
@@ -26,9 +27,16 @@
   $: solveForDarknessEnabled = !solvedForDarkness($game);
   $: solveForLightEnabled = !solvedForLight($game);
 
-  function handleSolveRequest(e) {
-    console.log('handleSolveRequest');
-    console.log(e.detail)
+  const solutionManager = new SolutionManager();
+
+  async function handleSolveRequest(e) {
+    const { goal } = e.detail;
+    try {
+      const solution: Array<Coord> = await solutionManager.getOptimalSolution($game, goal);
+      console.log(solution);
+    } catch(e) {
+      console.error(e);
+    }
   }
 </script>
 

@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import Coord from '$lib/coord';
 import { Mode } from '$lib/mode';
 
-interface Game {
+export interface Game {
   m: number,
   n: number,
   tiles: Map<number, boolean>,
