@@ -23,7 +23,6 @@ function createGame(m: number, n: number, coords: Array<Coord>) {
 	return {
 		subscribe,
 		toggle: (coord: Coord) => {
-      console.log('toggle', coord);
       update((game: Game) => {
         const current = light(game, coord);
         game.tiles.set(`${coord.i}_${coord.j}`, !current);
