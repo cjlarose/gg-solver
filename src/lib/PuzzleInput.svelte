@@ -12,7 +12,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="puzzle-input" style="--hex-width: { width * 100 }%; --hex-height: { height * 100 }%">
+<div class="puzzle-input" style="--hex-width: { width * 100 }%;">
   {#each rows as i }
     <div class="hex-row">
       {#each cols as j }
