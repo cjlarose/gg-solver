@@ -87,6 +87,10 @@
     visibility: visible;
   }
 
+  .hex-button:hover {
+    opacity: 60%;
+  }
+
   .hex-dark .hex-button {
     background-color: var(--dark-color);
   }
