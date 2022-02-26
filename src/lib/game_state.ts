@@ -5,18 +5,20 @@ import { Mode } from '$lib/mode';
 export interface Game {
   m: number,
   n: number,
-  tiles: Map<number, boolean>,
+  board: Set<string>,
+  onTiles: Set<string>,
 }
 
 function createGame(m: number, n: number, coords: Array<Coord>) {
-  const tiles = new Map();
+  const board: Set<string> = new Set();
   for (const coord of coords) {
-    tiles.set(`${coord.i}_${coord.j}`, false);
+    board.add(`${coord.i}_${coord.j}`);
   }
   const game: Game = {
     m,
     n,
-    tiles,
+    board,
+    onTiles: new Set(),
   };
 	const { subscribe, update } = writable(game);
 
@@ -24,8 +26,11 @@ function createGame(m: number, n: number, coords: Array<Coord>) {
 		subscribe,
 		toggle: (coord: Coord) => {
       update((game: Game) => {
-        const current = light(game, coord);
-        game.tiles.set(`${coord.i}_${coord.j}`, !current);
+        if (light(game, coord)) {
+          game.onTiles.delete(`${coord.i}_${coord.j}`);
+        } else {
+          game.onTiles.add(`${coord.i}_${coord.j}`);
+        }
         return game;
       });
     },
@@ -33,11 +38,11 @@ function createGame(m: number, n: number, coords: Array<Coord>) {
 }
 
 export function member(game: Game, coord: Coord) {
-  return game.tiles.has(`${coord.i}_${coord.j}`);
+  return game.board.has(`${coord.i}_${coord.j}`);
 }
 
 export function light(game: Game, coord: Coord) {
-  return game.tiles.get(`${coord.i}_${coord.j}`) === true;
+  return game.onTiles.has(`${coord.i}_${coord.j}`);
 }
 
 export function createGameFromMode(mode: Mode) {
@@ -45,19 +50,10 @@ export function createGameFromMode(mode: Mode) {
   return createGame(m, n, tiles);
 }
 
-function allTilesInState(game: Game, state: boolean) {
-  for (const val of game.tiles.values()) {
-    if (val !== state) {
-      return false;
-    }
-  }
-  return true;
-}
-
 export function solvedForDarkness(game: Game): boolean {
-  return allTilesInState(game, false);
+  return game.onTiles.size == 0;
 }
 
 export function solvedForLight(game: Game): boolean {
-  return allTilesInState(game, true);
+  return game.onTiles.size == game.board.size;
 }
